@@ -10,6 +10,9 @@
 #include "font.h"
 #include "graphics.h"
 #include "heap.h"
+#ifndef SDK_BUILD_ARM
+#include "port/enyo_tts.h"
+#endif
 #include "render_text.h"
 #include "string_gf.h"
 #include "sys_task.h"
@@ -189,6 +192,9 @@ u8 Text_AddPrinter(const TextPrinterTemplate *template, u32 renderDelay, TextPri
 
     printer->template = *template;
     printer->template.toPrint.raw = String_GetData(printer->template.toPrint.string);
+#ifndef SDK_BUILD_ARM
+    EnyoTTS_OnPrinterStart(printer);
+#endif
     printer->callback = callback;
 
     sPausePrinter = FALSE;

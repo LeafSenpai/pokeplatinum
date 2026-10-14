@@ -8,6 +8,9 @@
 #include "bg_window.h"
 #include "charcode.h"
 #include "font.h"
+#ifndef SDK_BUILD_ARM
+#include "port/enyo_tts.h"
+#endif
 #include "render_text.h"
 #include "sound_playback.h"
 #include "system.h"
@@ -222,6 +225,9 @@ enum RenderResult RenderText(TextPrinter *printer)
             printer->template.currX = printer->template.x;
             printer->template.currY = printer->template.y;
             printer->state = RENDER_STATE_HANDLE_CHAR;
+#ifndef SDK_BUILD_ARM
+            EnyoTTS_OnPageAdvance(printer);
+#endif
         }
 
         return RENDER_UPDATE;
@@ -251,6 +257,9 @@ enum RenderResult RenderText(TextPrinter *printer)
             Window_CopyToVRAM(printer->template.window);
         } else {
             printer->state = RENDER_STATE_HANDLE_CHAR;
+#ifndef SDK_BUILD_ARM
+            EnyoTTS_OnPageAdvance(printer);
+#endif
         }
 
         return RENDER_UPDATE;

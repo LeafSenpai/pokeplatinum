@@ -1035,3 +1035,10 @@ pokeplatinum_c += files(
 )
 endif
 endif
+
+# ENYO_POKE_TTS_v0.1
+if(build_target == 'linux' or build_target == 'win64')
+pokeplatinum_c += files(
+    'port/enyo_tts.c'
+)
+endif
